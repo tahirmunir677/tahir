@@ -1,0 +1,73 @@
+The Matlab Program for the generation of the statistic is given as follows:
+% function SYN=synthetic (sigma)
+clc;
+clear all;
+mu=3.1438;
+sigma=0.1238;
+n=5; m=100;
+d=0.7;
+for runs=1:100
+x=normrnd (mu,sigma,m,n);
+x_mean=mean(x,2);
+e (m)=0;
+for i=1: m
+if x_mean (i)>mu
+e (i) =d;
+else
+e (i) =-d;
+end;
+end;
+z (m)=0;
+t=z;
+for kp=1: m
+for p=1:n
+t(kp)=t(kp)+(x(kp,p)-mu+e(kp)*sigma)^2;
+end;
+end;
+Matlab Program for the calculation of the mean shift
+% ******************for new mean process--------***********
+shift=0:0.25:1.5;
+len_sh=length(shift);
+for i=1:len_sh
+mu_new(i)=mu+shift(i)*sigma;
+end;
+e_new(m,len_sh)=0;
+for k=1:len_sh
+for i=1:m
+if x_mean(i)>mu_new(k)
+e_new(i,k)=d;
+else
+e_new(i,k)=-d;
+end;
+end;
+end;
+t_new(runs,m,len_sh)=0;
+for i=1:len_sh
+for k=1:m
+for p=1:n
+t_new(runs,k,i)=t_new(runs,k,i)+(x(k,p)-mu_new(i)+e_new(k)*sigma)^2;
+end;
+end;
+end;
+Matlab Program for calculating the ARL
+ucl=k*sigma^2;
+i=1;
+while t(i)<ucl
+i=i+1;
+end;
+% value_before_RL(runs)=t(i-1);
+% value_at_RL(runs)=t(i);
+RL(runs)=i; %**************RUN Length**********%
+for pp=1:len_sh
+pk=1;
+while t_new(runs,pk,pp)<ucl
+pk=pk+1;
+22
+end;
+new_run(runs,pp)=pk;
+end;
+% end;
+end;
+RL_avg=mean(RL)
+new_run_avg=mean(new_run)
+% return
